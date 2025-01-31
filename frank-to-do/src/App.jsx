@@ -34,7 +34,6 @@ function App() {
         <h1 className='pb-8 block text-grey-800'>Todo App</h1>
         <div className='p-2 flex flex-row gap-2 justify-center bg-blue-100'>
           <label><button className='shadow-md' onClick={toggleOpen}>{showOpen ? 'show all' : 'show open'}</button></label>
-          <label><button className='shadow-md'>new Todo</button></label>
         </div>
         <div className='p-2 flex bg-blue-100'>
           <ul id="todolist" className='w-full'>
