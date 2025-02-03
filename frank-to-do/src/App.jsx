@@ -22,8 +22,9 @@ function App() {
 
   // todo add a unique id to the new todo
   const addTodo  = (text) => {
+    const id = parseInt(Math.random() * 500, 10);
     setTodos((previous) =>
-      (text.length > 0) ? [...previous, {id:5, text:text, done:false}] : previous
+      (text.length > 0) ? [...previous, {id:id, text:text, done:false}] : previous
     );
     setNewTodo('');
   }
@@ -31,13 +32,13 @@ function App() {
   return (
     <>
       <div className='flex flex-col min-w-[360px] md:min-w-[900px] p-2 md:p-4 bg-white rounded-md shadow-md'>
-        <h1 className='pb-8 block text-grey-800'>Todo App</h1>
+        <h1 className='pb-8 block text-grey-800 font-mono'>Todo App</h1>
         <div className='p-2 flex flex-row gap-2 justify-center bg-blue-100'>
           <label><button className='shadow-md' onClick={toggleOpen}>{showOpen ? 'show all' : 'show open'}</button></label>
         </div>
         <div className='p-2 flex bg-blue-100'>
           <div id="todolist" className='w-full grid grid-cols-1 md:grid-cols-2 p-2 gap-4'>
-            { todos && todos.map((todo) => (
+            { todos && todos.filter((todo)=> (showOpen && !todo.done) || !showOpen).map((todo) => (
                 <div key={todo.id}>
                   <div className='flex flex-row justify-between bg-white p-2 mb-2'>
                     <span>{todo.text}</span>
