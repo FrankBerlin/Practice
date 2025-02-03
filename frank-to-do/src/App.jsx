@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Counter from './Counter';
 import './App.css'
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
         <h1 className='pb-8 block text-grey-800 font-mono'>Todo App</h1>
         <div className='p-2 flex flex-row gap-2 justify-center bg-blue-100'>
           <label><button className='shadow-md' onClick={toggleOpen}>{showOpen ? 'show all' : 'show open'}</button></label>
+          <Counter todos={todos} />
         </div>
         <div className='p-2 flex bg-blue-100'>
           <div id="todolist" className='w-full grid grid-cols-1 md:grid-cols-2 p-2 gap-4'>
