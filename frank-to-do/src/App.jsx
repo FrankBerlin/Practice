@@ -1,12 +1,16 @@
 import { useState } from 'react'
 import Counter from './Counter';
 import './App.css'
+import useLocalStorage from './hooks/useLocalStorage';
 
 function App() {
-  const [todos, setTodos] = useState([
+
+  // todo add local storage hook here
+ /* const [todos, setTodos] = useState([
     {id:1, text:"first todo", done:false},
     {id:2, text:"another todo", done:true}
-  ]);
+  ]);*/
+  const [todos, setTodos] = useLocalStorage('todoapp', []);
   const [showOpen, setShowOpen] = useState(false);
   const [newTodo, setNewTodo] = useState('');
 
@@ -19,23 +23,25 @@ function App() {
     ));
   };
 
+  // handle input element for new todo
   const handleChange = (event) => setNewTodo(event.target.value);
 
-  // todo add a unique id to the new todo
   const addTodo  = (text) => {
     const id = parseInt(Math.random() * 500, 10);
     setTodos((previous) =>
       (text.length > 0) ? [...previous, {id:id, text:text, done:false}] : previous
     );
-    setNewTodo('');
+    setNewTodo(''); // clear input field
   }
+
+  // todo add removeTodo function 
 
   return (
     <>
       <div className='flex flex-col min-w-[360px] md:min-w-[900px] p-2 md:p-4 bg-white rounded-md shadow-md'>
-        <h1 className='pb-8 block text-grey-800 font-mono'>Todo App</h1>
-        <div className='p-2 flex flex-row gap-2 justify-center bg-blue-100'>
-          <label><button className='shadow-md' onClick={toggleOpen}>{showOpen ? 'show all' : 'show open'}</button></label>
+        <h1 className='pb-4 md:pb-8 block text-grey-800 font-mono text-2xl md:text-5xl'>Todo App</h1>
+        <div className='p-2 flex flex-row gap-4 justify-center bg-blue-100'>
+          <label><button className='shadow-md' onClick={toggleOpen} aria-label="filter todos">{showOpen ? 'show all' : 'show open'}</button></label>
           <Counter todos={todos} />
         </div>
         <div className='p-2 flex bg-blue-100'>
@@ -49,10 +55,10 @@ function App() {
                 </div>
             ))}
           </div>
-          </div>
+        </div>
           <div className='mt-8'>
-            <input onChange={handleChange} className='p-[11px] border-2 border-solid border-blue-100 mb-4 mr-4 shadow-inner rounded-md' value={newTodo} type='text' placeholder='new todo'/>
-            <button onClick={()=>addTodo(newTodo)} className='shadow-md bg-green-400'>Add</button>
+            <input onChange={handleChange} className='p-[11px] border-2 border-solid border-blue-100 mb-4 mr-4 shadow-inner rounded-md' value={newTodo} type='text' placeholder='new todo' aria-label="enter new tdo text"/>
+            <button onClick={()=>addTodo(newTodo)} className='shadow-md bg-green-400' aria-label=" add new todo">Add</button>
           </div>
       </div>
     </>
