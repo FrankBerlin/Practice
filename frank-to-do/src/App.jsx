@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Counter from './Counter';
+import Techdetails from './Techdetails';
 import './App.css'
 import useLocalStorage from './hooks/useLocalStorage';
 
@@ -28,12 +29,14 @@ function App() {
     setNewTodo(''); // clear input field
   }
 
-  // todo add removeTodo function 
+  const removeTodo = (id) => {
+    setTodos(todos.filter((todo)=> todo.id !== id));
+  }
 
   return (
     <>
       <div className='flex flex-col min-w-[360px] md:min-w-[900px] p-2 md:p-4 bg-white rounded-md shadow-md'>
-        <h1 className='pb-4 md:pb-8 block text-grey-800 font-mono text-2xl md:text-5xl'>Todo App</h1>
+        <h1 className='pb-4 md:pb-8 block text-grey-800 font-mono text-2xl md:text-5xl'>todo app</h1>
         <div className='p-2 flex flex-row gap-4 justify-center bg-blue-100'>
           <label><button className='shadow-md p-2 md:px-5' onClick={toggleOpen} aria-label="filter todos">{showOpen ? 'show all' : 'show open'}</button></label>
           <Counter todos={todos} />
@@ -42,9 +45,12 @@ function App() {
           <div id="todolist" className='w-full grid grid-cols-1 md:grid-cols-2 p-2 gap-4'>
             { todos && todos.filter((todo)=> (showOpen && !todo.done) || !showOpen).map((todo) => (
                 <div key={todo.id}>
-                  <div className='flex flex-row justify-between bg-white p-2 mb-2'>
+                  <div className='flex flex-row justify-between items-center bg-white p-2 mb-2'>
                     <span>{todo.text}</span>
-                    <input className='w-[30px]' type='checkbox' checked={todo.done} value={newTodo} onChange={() => {toggleDone(todo.id)}} />
+                    <div className='flex flex-row items-center gap-4'>
+                      <input className='w-[30px] h-[30px]' type='checkbox' checked={todo.done} value={newTodo} onChange={()=>{toggleDone(todo.id)}} />
+                      <button className='bg-red-200 hover:bg-red-300 py-1 px-2 text-base' onClick={()=>removeTodo(todo.id)} aria-label="delete todo">X</button>
+                    </div>
                   </div>
                 </div>
             ))}
@@ -55,8 +61,9 @@ function App() {
             <button onClick={()=>addTodo(newTodo)} className='shadow-md bg-green-400 p-2 md:px-5' aria-label=" add new todo">Add</button>
           </div>
       </div>
+      <Techdetails />
     </>
-  )
+  );
 }
 
 export default App
