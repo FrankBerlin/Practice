@@ -33,6 +33,11 @@ function App() {
     setTodos(todos.filter((todo)=> todo.id !== id));
   }
 
+  // todo delete ALL done todos
+  const removeAll = () => {
+    setTodos([]);
+  }
+
   return (
     <>
       <div className='flex flex-col min-w-[360px] md:min-w-[900px] p-2 md:p-4 bg-white rounded-md shadow-md'>
@@ -42,6 +47,9 @@ function App() {
           <Counter todos={todos} />
         </div>
         <div className='p-2 flex bg-blue-100'>
+          {todos.length == 0 &&  
+            <div className='flex flex-row w-full items-center p-2 bg-blue-100'>No Todos yet</div>
+          }
           <div id="todolist" className='w-full grid grid-cols-1 md:grid-cols-2 p-2 gap-4'>
             { todos && todos.filter((todo)=> (showOpen && !todo.done) || !showOpen).map((todo) => (
                 <div key={todo.id}>
@@ -56,9 +64,14 @@ function App() {
             ))}
           </div>
         </div>
-          <div className='mt-8'>
-            <input onChange={handleChange} className='p-[11px] border-2 border-solid border-blue-100 mb-4 mr-4 shadow-inner rounded-md' value={newTodo} type='text' placeholder='new todo' aria-label="enter new tdo text"/>
-            <button onClick={()=>addTodo(newTodo)} className='shadow-md bg-green-400 p-2 md:px-5' aria-label=" add new todo">Add</button>
+          <div className='mt-8 flex items-center justify-between'>
+            <div>
+              <input onChange={handleChange} className='p-[11px] border-2 border-solid border-blue-100 mb-4 mr-4 shadow-inner rounded-md' value={newTodo} type='text' placeholder='new todo' aria-label="enter new tdo text"/>  
+              <button onClick={()=>addTodo(newTodo)} className='shadow-md bg-green-400 p-2 md:px-5' aria-label=" add new todo">Add</button>
+          </div>
+          <div>
+            <button onClick={removeAll} className='bg-red-200 hover:bg-red-300 py-1 px-2 text-base'>Delete All</button>
+          </div>
           </div>
       </div>
       <Techdetails />
