@@ -42,7 +42,15 @@ function App() {
 
   // todo delete ALL done todos
   const removeAll = () => {
-    setTodos([]);
+    // let all todos fade out with css class
+    setTodos((previous) =>
+      previous.map((todo) => 
+       ( {...todo, fadeOut: true} )
+      ));
+
+    // empty the complete todos array
+    setTimeout(() =>
+      setTodos([]), 500);
   }
 
   return (
