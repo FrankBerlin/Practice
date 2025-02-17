@@ -8,6 +8,7 @@ function App() {
   const [todos, setTodos] = useLocalStorage('todoapp', []);
   const [showOpen, setShowOpen] = useState(false);
   const [newTodo, setNewTodo] = useState('');
+  const [filter, setFilter] = useState('');
 
   const toggleOpen = () => setShowOpen(!showOpen);
 
@@ -20,6 +21,9 @@ function App() {
 
   // handle input element for new todo
   const handleChange = (event) => setNewTodo(event.target.value);
+
+  // handle input of filter string
+  const handleFilter = (event) => setFilter(event.target.value);
 
   const addTodo  = (text) => {
     const id = parseInt(Math.random() * 500, 10);
@@ -53,20 +57,28 @@ function App() {
       setTodos([]), 500);
   }
 
+  const filteredTodos = (filter !== '') ? todos.filter(
+    (todo) => todo.text.includes(filter) 
+  ) : todos;
+
   return (
     <>
       <div className='flex flex-col min-w-[360px] md:min-w-[900px] p-2 md:p-4 bg-white rounded-md shadow-md'>
-        <h1 className='pb-4 md:pb-8 block text-grey-800 font-mono text-2xl md:text-5xl'>todo app</h1>
+        <h1 className='animate-fade-in pb-4 md:pb-8 block text-grey-800 font-mono text-2xl md:text-5xl'>todo app</h1>
         <div className='p-2 flex flex-row gap-4 justify-center bg-blue-100'>
           <label><button className='shadow-md bg-green-400 p-2 md:px-5' onClick={toggleOpen} aria-label="filter todos">{showOpen ? 'show all' : 'show open'}</button></label>
           <Counter todos={todos} />
+        </div>
+        <div className='bg-blue-100 p-2'>
+          <label>Filter Todos: </label>
+          <input type='text' value={filter} onChange={handleFilter} className='p-2 border-2 border-solid border-blue-200 hover:border-blue-400 mb-4 mr-4 shadow-inner rounded-md'></input>
         </div>
         <div className='p-2 flex bg-blue-100'>
           {todos.length == 0 &&  
             <div className='flex flex-row w-full items-center p-2 bg-blue-100'>No Todos yet</div>
           }
           <div id="todolist" className='w-full grid grid-cols-1 md:grid-cols-2 p-2 gap-4'>
-            { todos && todos.filter((todo)=> (showOpen && !todo.done) || !showOpen).map((todo) => (
+            { filteredTodos && filteredTodos.filter((todo)=> (showOpen && !todo.done) || !showOpen).map((todo) => (
                 <div key={todo.id} className={(todo.fadeOut ? 'fade-out' : '')}>
                   <div className='flex flex-row justify-between items-center bg-white p-2 mb-2'>
                     <span>{todo.text}</span>
