@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Counter from './Counter';
+import Button from './components/Button';
 import Techdetails from './Techdetails';
 import './App.css'
 import useLocalStorage from './hooks/useLocalStorage';
@@ -66,7 +67,7 @@ function App() {
       <div className='flex flex-col min-w-[360px] md:min-w-[900px] p-2 md:p-4 bg-white rounded-md shadow-md'>
         <h1 className='animate-fade-in pb-4 md:pb-8 block text-grey-800 font-mono text-2xl md:text-5xl'>todo app</h1>
         <div className='p-2 flex flex-row gap-4 justify-center bg-blue-100'>
-          <label><button className='shadow-md bg-green-400 p-2 md:px-5' onClick={toggleOpen} aria-label="filter todos">{showOpen ? 'show all' : 'show open'}</button></label>
+          <label><Button onClick={toggleOpen} aria-label="filter todos" text={showOpen ? 'show all' : 'show open'} /></label>
           <Counter todos={todos} />
         </div>
         <div className='bg-blue-100 p-2'>
@@ -94,10 +95,10 @@ function App() {
           <div className='mt-8 flex items-center justify-between'>
             <div>
               <input onChange={handleChange} className='p-[11px] border-2 border-solid border-blue-200 hover:border-blue-400 mb-4 mr-4 shadow-inner rounded-md' value={newTodo} type='text' placeholder='new todo' aria-label="enter new tdo text"/>  
-              <button onClick={()=>addTodo(newTodo)} className='shadow-md bg-green-400 p-2 md:px-5' aria-label=" add new todo">Add</button>
-          </div>
+              <Button onClick={()=>addTodo(newTodo)} text='add' type='normal' />
+            </div>
           <div>
-            <button onClick={removeAll} className='bg-red-200 hover:bg-red-300 py-1 p-2 text-base'>Delete All</button>
+            <Button onClick={removeAll} type='alert' text='Delete All' />
           </div>
           </div>
       </div>
