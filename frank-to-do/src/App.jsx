@@ -64,15 +64,16 @@ function App() {
 
   return (
     <>
-      <div className='flex flex-col min-w-[360px] md:min-w-[900px] p-2 md:p-4 bg-white rounded-md shadow-md'>
-        <h1 className='animate-fade-in pb-4 md:pb-8 block text-grey-800 font-mono text-2xl md:text-5xl'>todo app</h1>
+      <div className='animate-fade-in flex flex-col min-w-[360px] md:min-w-[900px] p-2 md:p-4 bg-white rounded-md shadow-md'>
+        <h1 className='pb-4 md:pb-8 block text-grey-800 font-mono text-2xl md:text-5xl'>todo app</h1>
         <div className='p-2 flex flex-row gap-4 justify-center bg-blue-100'>
           <label><Button onClick={toggleOpen} aria-label="filter todos" text={showOpen ? 'show all' : 'show open'} /></label>
           <Counter todos={todos} />
         </div>
         <div className='bg-blue-100 p-2'>
           <label>Filter Todos: </label>
-          <input type='text' value={filter} onChange={handleFilter} className='p-2 border-2 border-solid border-blue-200 hover:border-blue-400 mb-4 mr-4 shadow-inner rounded-md'></input>
+          <input type='text' value={filter} onChange={handleFilter} className='p-2 border-2 border-solid border-blue-200 hover:border-blue-400 mb-4 mr-2 shadow-inner rounded-md'></input>
+          <Button type='alert' text='X' onClick={ () => setFilter('') } />
         </div>
         <div className='p-2 flex bg-blue-100'>
           {todos.length == 0 &&  
@@ -85,7 +86,7 @@ function App() {
                     <span>{todo.text}</span>
                     <div className='flex flex-row items-center gap-4'>
                       <input className='w-[30px] h-[30px]' type='checkbox' checked={todo.done} value={newTodo} onChange={()=>{toggleDone(todo.id)}} />
-                      <button className='bg-red-200 hover:bg-red-300 py-1 px-2 text-base' onClick={()=>removeTodo(todo.id)} aria-label="delete todo">X</button>
+                      <Button type='alert' text='X' onClick={()=>removeTodo(todo.id)} />
                     </div>
                   </div>
                 </div>

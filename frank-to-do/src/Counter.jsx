@@ -1,10 +1,13 @@
 import PropTypes from 'prop-types';
+import React from 'react';
 
-const Counter = ({ todos }) => {
+const Counter = ({ todos = [] }) => {
+    const total = todos.length;
+    const open = todos.filter((todo) => !todo.done).length;
 
     return (
         <div className="flex items-center">
-            Total: {todos.length} | Open: {todos.filter((todo) => !todo.done).length}
+            Total: {total} | Open: {open}
         </div>
     );
 };
